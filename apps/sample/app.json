@@ -14,11 +14,10 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.bndkt.clipper"
     },
     "android": {
       "adaptiveIcon": {
@@ -29,8 +28,11 @@
     "web": {
       "favicon": "./assets/favicon.png"
     },
-    "plugins": [
-      "react-native-app-clip"
-    ]
+    "plugins": ["react-native-app-clip"],
+    "extra": {
+      "eas": {
+        "projectId": "8914e847-cca4-4565-b0fb-389f5fa6847a"
+      }
+    }
   }
 }

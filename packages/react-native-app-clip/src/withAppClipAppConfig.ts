@@ -23,6 +23,7 @@ export const getAppClipEntitlements = (iosConfig: ExpoConfig["ios"]) => {
 };
 
 export const withAppClipAppConfig: ConfigPlugin = (config) => {
+  console.log("config.ios!.bundleIdentifier!", config.ios!.bundleIdentifier!);
   const appClipName = getAppClipFolder(config.name);
   const appClipBundleIdentifier = getAppClipBundleIdentifier(
     config.ios!.bundleIdentifier!

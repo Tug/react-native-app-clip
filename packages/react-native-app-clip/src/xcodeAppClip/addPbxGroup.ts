@@ -21,7 +21,9 @@ export default function addPbxGroup(
     "Supporting",
     "Expo.plist"
   );
-  fs.mkdirSync(supportingPath);
+  if (!fs.existsSync(supportingPath)) {
+    fs.mkdirSync(supportingPath);
+  }
   copyFileSync(expoPlistSource, supportingPath);
 
   // Copy SplashScreen.storyboard
