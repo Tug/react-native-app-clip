@@ -3,7 +3,7 @@ import { mergeContents } from "@expo/config-plugins/build/utils/generateCode";
 import * as fs from "fs";
 import * as path from "path";
 
-import { getAppClipFolder } from "./withIosAppClip";
+import { getAppClipFolder } from ".";
 
 type MergeInstruction = {
   tag: string;
@@ -41,20 +41,12 @@ export const withAppClipAppDelegate: ConfigPlugin = (config) => {
         { name: "AppDelegate.h" },
         {
           name: "AppDelegate.mm",
-          replacements: [
-            // Expo < 46
-            {
-              regexp: `initialProperties:nil`,
-              newSubstr: `initialProperties:@{@"isClip" : @true}`,
-            },
-          ],
           merges: [
-            // Expo >= 46
             {
               tag: "withAppClipDelegate-1",
               newSrc: 'initProps[@"isClip"] = @true;',
               anchor:
-                /NSMutableDictionary \*initProps = \[NSMutableDictionary new\]/,
+                /NSMutableDictionary \*initProps = \[NSMutableDictionary new\];/,
               offset: 1,
             },
           ],
@@ -65,12 +57,6 @@ export const withAppClipAppDelegate: ConfigPlugin = (config) => {
       filesToCopy.forEach(async (file) => {
         const sourceFilePath = path.join(appRootPath, file.name);
         let fileContent = fs.readFileSync(sourceFilePath).toString();
-        file.replacements?.forEach((replacement) => {
-          fileContent = fileContent.replace(
-            replacement.regexp,
-            replacement.newSubstr
-          );
-        });
         file.merges?.forEach((merge) => {
           const mergeResult = mergeContents({
             tag: merge.tag,

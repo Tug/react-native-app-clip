@@ -13,19 +13,6 @@ export default function addPbxGroup(
   // App Clip folder
   const appClipPath = path.join(platformProjectRoot, appClipFolder);
 
-  // Copy Expo.plist
-  const supportingPath = path.join(appClipPath, "Supporting");
-  const expoPlistSource = path.join(
-    platformProjectRoot,
-    appName,
-    "Supporting",
-    "Expo.plist"
-  );
-  if (!fs.existsSync(supportingPath)) {
-    fs.mkdirSync(supportingPath);
-  }
-  copyFileSync(expoPlistSource, supportingPath);
-
   // Copy SplashScreen.storyboard
   const splashScreenStoryboardSource = path.join(
     platformProjectRoot,
@@ -40,7 +27,6 @@ export default function addPbxGroup(
     appName,
     "Images.xcassets"
   );
-
   copyFolderRecursiveSync(imagesXcassetsSource, appClipPath);
 
   // Add PBX group
@@ -52,13 +38,13 @@ export default function addPbxGroup(
       "Info.plist",
       "Images.xcassets",
       "SplashScreen.storyboard",
-      "Supporting/Expo.plist",
       `${appClipFolder}.entitlements`,
+      "Supporting/Expo.plist",
+      /* "main.jsbundle", */
     ],
     appClipFolder,
     appClipFolder
   );
-  // console.log(`Added PBXGroup ${pbxGroupUuid}`);
 
   // Add PBXGroup to top level group
   const groups = proj.hash.project.objects["PBXGroup"];
@@ -66,7 +52,6 @@ export default function addPbxGroup(
     Object.keys(groups).forEach(function (key) {
       if (groups[key].name === undefined && groups[key].path === undefined) {
         proj.addToPbxGroup(pbxGroupUuid, key);
-        // console.log(`Added PBXGroup ${pbxGroupUuid} root PBXGroup group ${key}`);
       }
     });
   }

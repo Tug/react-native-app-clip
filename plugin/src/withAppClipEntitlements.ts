@@ -2,9 +2,9 @@ import { ConfigPlugin, withDangerousMod } from "@expo/config-plugins";
 import plist from "@expo/plist";
 import * as fs from "fs";
 import * as path from "path";
-import { getAppClipEntitlements } from "./withAppClipAppConfig";
 
-import { getAppClipFolder } from "./withIosAppClip";
+import { getAppClipFolder } from ".";
+import { getAppClipEntitlements } from "./withAppClipAppConfig";
 
 export const withAppClipEntitlements: ConfigPlugin = (config) => {
   return withDangerousMod(config, [

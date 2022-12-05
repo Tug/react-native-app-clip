@@ -15,19 +15,19 @@ export async function addAppClipXcodeTarget(
     appClipName,
     appClipFolder,
     appClipBundleIdentifier,
-    appClipRootPath,
     platformProjectRoot,
     currentProjectVersion,
     marketingVersion,
+    clipRootFolder,
   }: {
     appName: string;
     appClipName: string;
     appClipFolder: string;
     appClipBundleIdentifier: string;
-    appClipRootPath: string;
     platformProjectRoot: string;
     currentProjectVersion: string;
     marketingVersion: string;
+    clipRootFolder?: string;
   }
 ) {
   const targetUuid = proj.generateUuid();
@@ -65,7 +65,7 @@ export async function addAppClipXcodeTarget(
   addTargetDependency(proj, target);
 
   // Add build phases
-  addBuildPhases(proj, { groupName, productFile, targetUuid });
+  addBuildPhases(proj, { groupName, productFile, targetUuid, clipRootFolder });
 
   // Add PBXGroup
   addPbxGroup(proj, { appName, appClipFolder, platformProjectRoot });

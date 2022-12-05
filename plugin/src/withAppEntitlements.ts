@@ -1,6 +1,6 @@
 import { ConfigPlugin, withEntitlementsPlist } from "@expo/config-plugins";
 
-import { getAppClipBundleIdentifier } from "./withIosAppClip";
+import { getAppClipBundleIdentifier } from ".";
 
 export const withAppEntitlements: ConfigPlugin = (config) => {
   return withEntitlementsPlist(config, (config) => {

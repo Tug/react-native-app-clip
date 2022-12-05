@@ -22,10 +22,8 @@ export default function addProductFile(
   };
 
   proj.addToPbxFileReferenceSection(productFile);
-  // console.log(`Added PBXFileReference: ${productFile.fileRef}`);
 
   proj.addToPbxBuildFileSection(productFile);
-  // console.log(`Added PBXBuildFile: ${productFile.fileRef}`);
 
   return productFile;
 }

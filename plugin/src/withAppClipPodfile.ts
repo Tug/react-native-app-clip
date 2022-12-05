@@ -3,7 +3,7 @@ import { mergeContents } from "@expo/config-plugins/build/utils/generateCode";
 import * as fs from "fs";
 import * as path from "path";
 
-import { getAppClipFolder } from "./withIosAppClip";
+import { getAppClipFolder } from ".";
 
 export const withAppClipPodfile: ConfigPlugin = (config) => {
   return withDangerousMod(config, [
