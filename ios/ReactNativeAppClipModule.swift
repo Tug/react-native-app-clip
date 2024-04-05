@@ -13,6 +13,12 @@ internal class MissingContainerURLException: Exception {
     }
 }
 
+internal class MissingInitialURLException: Exception {
+    override var reason: String {
+        "Cannot determine the initial URL."
+    }
+}
+
 public class ReactNativeAppClipModule: Module {
     // Each module class must implement the definition function. The definition consists of components
     // that describes the module's functionality and behavior.
@@ -78,5 +84,15 @@ public class ReactNativeAppClipModule: Module {
             let bundleIdentifier = Bundle.main.bundleIdentifier
             return bundleIdentifier
         }
+
+        AsyncFunction("getInitialLink") {
+            guard let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+                  let sceneDelegate = scene.delegate as? SceneDelegate,
+                  let userActivity = connectionOptions.userActivities.first,
+                  let initialLinkUrl = userActivity.webpageURL?.absoluteString else {
+                throw MissingInitialURLException()
+            }
+            return initialLinkUrl
+        }.runOnQueue(DispatchQueue.main)
     }
 }
