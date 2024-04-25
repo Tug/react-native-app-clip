@@ -16,7 +16,9 @@ export const withXcode: ConfigPlugin<{
 }> = (config, { name, targetName, bundleIdentifier, deploymentTarget }) => {
   return withXcodeProject(config, (config) => {
     const xcodeProject = config.modResults;
-
+    if (xcodeProject.getFirstProject().firstProject.targets?.length > 1) {
+      return config;
+    }
     const targetUuid = xcodeProject.generateUuid();
     const groupName = "Embed App Clips";
     const { projectName, platformProjectRoot } = config.modRequest;
